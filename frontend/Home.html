@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Price Tracker</title>
+    <link rel="stylesheet" href="generalCss.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        $("#header-container").load("Header.html");
+      });
+    </script>
+  </head>
+  <body>
+    <div class="navbar">
+      <a href="Home.html"><span>Price Tracker</span></a>
+      <div id="loginRegister">
+        <a href="Login.html">Login</a>
+        <a href="UserRegistration.html">Register</a>
+      </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 20px">
+      <input type="text" class="search-bar" placeholder="URL of prodcut..." />
+      <br>
+      <button class="search-button">Search</button>
+    </div>
+  </body>
+</html>
