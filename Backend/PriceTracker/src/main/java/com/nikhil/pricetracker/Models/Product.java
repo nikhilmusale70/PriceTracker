@@ -19,6 +19,7 @@ public class Product{
     @Column(name = "product_id")
     private Long productId;
     private String prdName;
+    @Column(length = 2000)
     private String url;
     private String image;
     @OneToMany(cascade = CascadeType.ALL)

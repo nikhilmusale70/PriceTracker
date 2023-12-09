@@ -19,7 +19,7 @@ public class ScriptController {
     @GetMapping("/runScript")
     public String runScript() {
         try {
-            puppeteerService.runPuppeteerScript();
+            puppeteerService.runPuppeteer();
             return "Puppeteer script executed successfully.";
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();

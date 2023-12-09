@@ -21,7 +21,7 @@ public class ProductService {
         Optional<Product> product = productRepo.findByprdName(productName);
         if(product.isEmpty()){
             List<ProductPriceDetail> prdPriceList = new ArrayList<>();
-            ProductPriceDetail prd1 = ProductPriceDetail.builder().productId(1L).price(100L).date(new Date()).build();
+            ProductPriceDetail prd1 = ProductPriceDetail.builder().productId(2L).price(100L).date(new Date()).build();
             prdPriceList.add(prd1);
             Product prd = Product.builder().prdName(productName).url(url).image("this is a image").productPriceDetail(prdPriceList).build();
             return productRepo.save(prd);
@@ -30,8 +30,8 @@ public class ProductService {
     }
 
     private String getProductNameFromUrl(String url){
-        //do some magic and retireve the name
-        return "alexa";
+        //do some magic and retrieve the name
+        return "trimmer";
     }
 
 }
