@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Entity
@@ -15,8 +16,9 @@ import java.util.Date;
 @Builder
 public class ProductPriceDetail{
     @Id
-    @Column(name="product_id")
-    private Long productId;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name="productPrice_id")
+    private Long id;
     private Long price;
-    private Date date;
+    private LocalDate date;
 }

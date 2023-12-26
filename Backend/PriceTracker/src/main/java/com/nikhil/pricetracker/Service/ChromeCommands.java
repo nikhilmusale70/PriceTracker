@@ -14,7 +14,17 @@ public class ChromeCommands {
         return command;
     }
     public String chromeNavigateCommand(String url){
-        String command = " await page.goto('" + url + "'); const extractedData = await page.evaluate(() => { const element = document.getElementsByClassName('B_NuCI')[0]; return element ? element.textContent : null;}); console.log( 'Extracted Data:', extractedData);";
+        String command = " await page.goto('" + url + "');";
+        return command;
+    }
+
+    public String getProductNameFromPage(){
+        String command = "const extractedData = await page.evaluate(() => { const element = document.getElementsByClassName('B_NuCI')[0]; return element ? element.textContent : null;}); console.log(extractedData);";
+        return command;
+    }
+
+    public String getProductPriceInString(){
+        String command = "const extractedData = await page.evaluate(() => { const element = document.getElementsByClassName('_16Jk6d')[0]; return element ? element.textContent : null;}); console.log(extractedData);";
         return command;
     }
 }

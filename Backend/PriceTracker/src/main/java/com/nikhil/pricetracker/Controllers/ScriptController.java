@@ -12,14 +12,13 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 @RestController
-@AllArgsConstructor
 public class ScriptController {
     PuppeteerService puppeteerService;
 
     @GetMapping("/runScript")
     public String runScript() {
         try {
-            puppeteerService.runPuppeteer();
+            puppeteerService.storePriceForAllProductsFromDb();
             return "Puppeteer script executed successfully.";
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();

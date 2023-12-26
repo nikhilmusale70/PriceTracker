@@ -2,6 +2,7 @@ package com.nikhil.pricetracker.Service;
 import com.nikhil.pricetracker.Models.Product;
 import com.nikhil.pricetracker.Repository.ProductRepo;
 import lombok.AllArgsConstructor;
+import lombok.SneakyThrows;
 import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
@@ -15,26 +16,47 @@ public class PuppeteerService {
     ChromeCommands chromeCommands;
     private ProductRepo productRepo;
 
+
     private List<Product> getAllProducts(){
         return productRepo.findAll();
     }
-    private String pageNavigateScript(String url){
+    @SneakyThrows
+    public String getProductName (String url){
         String command = chromeCommands.intialCommand();
         command += chromeCommands.chromeNavigateCommand(url);
+        command += chromeCommands.getProductNameFromPage();
         command += chromeCommands.endCommand();
-        return command;
+        String proName = runPuppeteerScript(command);
+        return proName;
     }
 
-    public String runPuppeteer() throws IOException, InterruptedException {
+    @SneakyThrows
+    public int getProductPrice(String url) {
+        String command = chromeCommands.intialCommand();
+        command += chromeCommands.chromeNavigateCommand(url);
+        command += chromeCommands.getProductPriceInString();
+        command += chromeCommands.endCommand();
+        String strPrice = runPuppeteerScript(command);
+        return stringPriceToInt(strPrice);
+    }
+    public int stringPriceToInt(String strPrice){
+        String numericString = strPrice.substring(1).trim();
+        numericString = numericString.replaceAll(",", "");
+        int priceInt = Integer.parseInt(numericString);
+        return priceInt;
+    }
+
+    public String storePriceForAllProductsFromDb() throws IOException, InterruptedException {
         List<Product> products = getAllProducts();
         for(Product product: products){
-            String script = pageNavigateScript(product.getUrl());
-            runPuppeteerScript(script);
-            System.out.println("Currently on : " + product.getUrl());
+            Long productId = product.getProductId();
+            int productPrice = getProductPrice(product.getUrl());
+            System.out.println(product.getPrdName() + " -> " + productPrice);
+
         }
         return "updated the price";
     }
-    private void runPuppeteerScript(String puppeteerScript) throws IOException, InterruptedException {
+    private String runPuppeteerScript(String puppeteerScript) throws IOException, InterruptedException {
         // Execute your Puppeteer script here using ProcessBuilder or any other method
         ProcessBuilder processBuilder = new ProcessBuilder("node", "-e", "\"" +puppeteerScript + "\"");
         processBuilder.redirectErrorStream(true);
@@ -54,5 +76,7 @@ public class PuppeteerService {
 
         int exitCode = process.waitFor();
         System.out.println("Puppeteer script exited with code: " + exitCode);
+
+        return puppeteerOutput.toString();
     }
 }

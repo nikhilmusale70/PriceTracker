@@ -1,5 +1,6 @@
 package com.nikhil.pricetracker.Service;
 
+import com.nikhil.pricetracker.Dto.LoginDto;
 import com.nikhil.pricetracker.Dto.UserDto;
 import com.nikhil.pricetracker.Exceptions.EmailAlreadyExistsException;
 import com.nikhil.pricetracker.Models.User;
@@ -37,5 +38,17 @@ public class UserService {
 
     public List<User> getAllUser(){
         return userRepo.findAll();
+    }
+
+    public User getUserById(Long id){
+        return userRepo.findUserById(id).orElse(null);
+    }
+
+    public boolean doLogin(LoginDto loginDto) {
+        User user = userRepo.findByEmail(loginDto.getEmail()).orElse(null);
+        if(user!=null){
+            return passwordEncoder.matches(loginDto.getPassword(), user.getPassword());
+        }
+        return false;
     }
 }

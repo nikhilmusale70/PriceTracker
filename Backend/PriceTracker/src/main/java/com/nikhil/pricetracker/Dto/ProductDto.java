@@ -5,6 +5,7 @@ import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
-public class Product {
+public class ProductDto {
     private String url;
+    private Long userId;
 }
